@@ -1,0 +1,56 @@
+[
+  {
+    "fsw": "M546x518S2ff00482x483S22f07525x467S15a2f516x482S2fb03506x485",
+    "image": "assets/examples/hello.png",
+    "translation": "Hello",
+    "description": "With your dominant hand open, touch your forehead and move your hand away, palm facing out."
+  },
+  {
+    "fsw": "M531x539S2ff00482x482S26500517x507S33e00482x482S15a00494x512",
+    "image": "assets/examples/thank-you.png",
+    "translation": "Thank You",
+    "description": "Touch your dominant open hand to your lips, then move your hand forward, palm up."
+  },
+  {
+    "fsw": "M526x532S15a37484x501S20500473x521S1f702480x495S26627504x468",
+    "image": "assets/examples/help.png",
+    "translation": "Help (him/her)",
+    "description": "Place your dominant hand's fist (thumb up) on the palm of your open non-dominant hand. Move both hands upward together."
+  },
+  {
+    "fsw": "M516x513S13f10487x498S22114484x487",
+    "image": "assets/examples/no-hand.png",
+    "translation": "No",
+    "description": "With your dominant hand, extend your index and middle fingers while keeping your other fingers tucked in. Tap these fingers against your thumb."
+  },
+  {
+    "fsw": "M518x524S30122482x476S30c00482x489",
+    "image": "assets/examples/no-face.png",
+    "translation": "No",
+    "description": "Shake your head horizontally while forrowing your eyebrows."
+  },
+  {
+    "fsw": "M511x520S1f701490x481S21100495x506",
+    "image": "assets/examples/sorry.png",
+    "translation": "Sorry",
+    "description": "Form a fist with your dominant hand, palm facing in. Circle it over your heart."
+  },
+  {
+    "fsw": "M535x542S1060a477x458S10621494x458S20800495x472S10629468x517S10602494x517S20800489x532S2d205502x485S2d211465x484",
+    "image": "assets/examples/friend.png",
+    "translation": "Friend",
+    "description": "Link the index fingers of both hands together, alternating their positions."
+  },
+  {
+    "fsw": "M530x518S20500470x500S20305503x482S3770b488x496S37713487x496S20500520x499S20303474x483",
+    "image": "assets/examples/love.png",
+    "translation": "Love",
+    "description": "Cross your arms over your chest as if giving yourself a hug, with your hands forming fists."
+  },
+  {
+    "fsw": "M522x525S11541498x491S11549479x498S20600489x476",
+    "image": "assets/examples/name.png",
+    "translation": "Name",
+    "description": "With your dominant hand, extend your index and middle fingers. Tap these fingers twice onto the extended index finger of your non-dominant hand, which is held horizontally."
+  }
+]
