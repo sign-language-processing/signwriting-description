@@ -82,4 +82,4 @@ def describe_sign(fsw: str):
 
 
 if __name__ == '__main__':
-    print(describe_sign("M522x525S11541498x491S11549479x498S20600489x476"))
+    print(describe_sign("M547x521S10e30512x480S10e38475x479S2ec00532x481S2ec18454x479"))

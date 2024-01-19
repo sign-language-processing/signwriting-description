@@ -1,6 +1,6 @@
 [
   {
-    "fsw": "M546x518S2ff00482x483S22f07525x467S15a2f516x482S2fb03506x485",
+    "fsw": "M546x518S30007482x483S22f07525x467S15a2f516x482",
     "image": "assets/examples/hello.png",
     "translation": "Hello",
     "description": "With your dominant hand open, touch your forehead and move your hand away, palm facing out."

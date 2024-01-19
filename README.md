@@ -6,7 +6,8 @@ The written representation of signed languages is challenging due to the complex
 SignWriting, though beneficial, demand specialized linguistic expertise for effective use.
 
 This repository aims to provide a solution for the automatic description of SignWriting in spoken languages.
-This solution can be used for teaching SignWriting to new learners, or for fine-tuning translation models.
+This solution can be used for teaching SignWriting to new learners, fine-tuning translation models,
+or zero-shot inference on motion generation models.
 
 ## Examples
 
@@ -16,11 +17,10 @@ While the translation is language specific, the description is language agnostic
 
 | SignWriting                                                                                                                                          | Translation    | Description                                                                                                                                                                  |
 |------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ![FSW: M546x518S2ff00482x483S22f07525x467S15a2f516x482S2fb03506x485](assets/examples/hello.png)                                                      | Hello          | With your dominant hand open, touch your forehead and move your hand away, palm facing out.                                                                                  |
-| ![FSW: M531x539S2ff00482x482S26500517x507S33e00482x482S15a00494x512](assets/examples/thank-you.png)                                                  | Thank You      | Touch your dominant open hand to your lips, then move your hand forward, palm up.                                                                                            |
+| ![FSW: M546x518S30007482x483S22f07525x467S15a2f516x482](assets/examples/thank-you.png)                                                               | Thank You      | Touch your dominant open hand to your lips, then move your hand forward, palm up.                                                                                            |
 | ![FSW: M526x532S15a37484x501S20500473x521S1f702480x495S26627504x468](assets/examples/help.png)                                                       | Help (him/her) | Place your dominant hand's fist (thumb up) on the palm of your open non-dominant hand. Move both hands upward together.                                                      |
 | ![FSW: M516x513S13f10487x498S22114484x487](assets/examples/no-hand.png)                                                                              | No             | With your dominant hand, extend your index and middle fingers while keeping your other fingers tucked in. Tap these fingers against your thumb.                              |
-| ![FSW: M518x524S30122482x476S30c00482x489](assets/examples/no-face.png)                                                                              | No             | Shake your head horizontally while furrowing your eyebrows.                                                                                                                  |
+| ![FSW: M518x524S30122482x476S30c00482x489](assets/examples/no-face.png)                                                                              | No             | Shake your head horizontally while forrowing your eyebrows.                                                                                                                  |
 | ![FSW: M511x520S1f701490x481S21100495x506](assets/examples/sorry.png)                                                                                | Sorry          | Form a fist with your dominant hand, palm facing in. Circle it over your heart.                                                                                              |
 | ![FSW: M535x542S1060a477x458S10621494x458S20800495x472S10629468x517S10602494x517S20800489x532S2d205502x485S2d211465x484](assets/examples/friend.png) | Friend         | Link the index fingers of both hands together, alternating their positions.                                                                                                  |
 | ![FSW: M530x518S20500470x500S20305503x482S3770b488x496S37713487x496S20500520x499S20303474x483](assets/examples/love.png)                             | Love           | Cross your arms over your chest as if giving yourself a hug, with your hands forming fists.                                                                                  |
@@ -37,10 +37,9 @@ non-natural description ([naive_description](signwriting_description/naive_descr
 For example, the "Hello" sign above would be described as:
 
 ```txt
-SIGNWRITING HEAD (head) at x: 482 y: 483 
-SIGNWRITING MOVEMENT-WALLPLANE DOUBLE STRAIGHT (Double Straight Movement, Wall Plane) Right hand, rotated 45 degrees right at x: 525 y: 467
-SIGNWRITING HAND-FLAT (flat) Right hand, palm facing out, rotated 45 degrees left at x: 516 y: 482
-SIGNWRITING DYNAMIC SIMULTANEOUS (Same Time) rotated 135 degrees left at x: 506 y: 485
+SIGNWRITING HEAD RIM (Head Rims) top right of the face at x: 482, y: 483
+SIGNWRITING MOVEMENT-WALLPLANE DOUBLE STRAIGHT (Double Straight Movement, Wall Plane) dominant hand rotated 45 degrees clockwise at x: 525, y: 467
+SIGNWRITING HAND-FLAT (Flat) left hand palm facing outwards, parallel to the wall rotated 45 degrees clockwise at x: 516, y: 482
 ```
 
 This description is not natural, but it is a good start to name the symbols and their positions.
@@ -55,12 +54,14 @@ WHICH IS NOT YET IMPLEMENTED
 ### GPT Description
 
 To generate a more natural description, we use ChatGPT over the naive description, and SignWriting image.
+We feed in all of the above examples for few-shot prediction.
 
-To describe the sign for "Name", the model generates:
+For example, if we exclude "Hello" and "Name" from the few-shots, we predict:
 
-```txt
-With both hands, extend your index and middle fingers while keeping the other fingers closed in a fist. Tap the extended fingers of both hands together multiple times.
-```
+| Translation | Description                                                                                                                                                          |
+|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Hello       | Place your dominant flat hand above your head and then move it side to side twice.                                                                                   |
+| Name        | With both hands, extend your index and middle fingers while keeping the other fingers closed in a fist. Tap the extended fingers of both hands together a few times. |
 
 ### Custom Model
 
