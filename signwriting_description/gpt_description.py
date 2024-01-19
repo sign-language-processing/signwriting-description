@@ -1,3 +1,4 @@
+import os
 from functools import lru_cache
 from io import BytesIO
 import json
@@ -66,7 +67,8 @@ def few_shot_messages(exclude=None):
 
 @lru_cache(maxsize=1)
 def get_openai_client():
-    return OpenAI()
+    api_key = os.environ.get("OPENAI_API_KEY", None)
+    return OpenAI(api_key=api_key)
 
 
 def describe_sign(fsw: str):
