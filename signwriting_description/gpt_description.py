@@ -35,6 +35,7 @@ def image_base64(fsw: str):
     return base64.b64encode(buffered.getvalue()).decode('utf-8')
 
 
+@lru_cache(maxsize=None)
 def create_user_message(fsw: str):
     return {
         "role": "user",
@@ -46,13 +47,17 @@ def create_user_message(fsw: str):
 
 
 @lru_cache(maxsize=1)
-def few_shot_messages():
+def few_shots():
     data_path = Path(__file__).parent / "few_shots/data.json"
     with open(data_path, 'r', encoding="utf-8") as file:
-        data = json.load(file)
+        return json.load(file)
 
+
+def few_shot_messages(exclude=None):
     messages = []
-    for entry in data:
+    for entry in few_shots():
+        if exclude is not None and entry['fsw'] == exclude:
+            continue
         messages.append(create_user_message(entry['fsw']))
         messages.append({"role": "assistant", "content": entry['description']})
 
@@ -65,7 +70,7 @@ def get_openai_client():
 
 
 def describe_sign(fsw: str):
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}] + few_shot_messages()
+    messages = [{"role": "system", "content": SYSTEM_PROMPT}] + few_shot_messages(exclude=fsw)
 
     # Add the specific sign
     messages.append(create_user_message(fsw))
@@ -82,4 +87,5 @@ def describe_sign(fsw: str):
 
 
 if __name__ == '__main__':
-    print(describe_sign("M547x521S10e30512x480S10e38475x479S2ec00532x481S2ec18454x479"))
+    for shot in few_shots():
+        print(shot['translation'] + ' | ' + describe_sign(shot['fsw']))

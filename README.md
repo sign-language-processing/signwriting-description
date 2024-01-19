@@ -17,7 +17,8 @@ While the translation is language specific, the description is language agnostic
 
 | SignWriting                                                                                                                                          | Translation    | Description                                                                                                                                                                  |
 |------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| ![FSW: M546x518S30007482x483S22f07525x467S15a2f516x482](assets/examples/thank-you.png)                                                               | Thank You      | Touch your dominant open hand to your lips, then move your hand forward, palm up.                                                                                            |
+| ![FSW: M546x518S30007482x483S22f07525x467S15a2f516x482](assets/examples/hello.png)                                                                   | Hello          | With your dominant hand open, touch your forehead and move your hand away, palm facing out.                                                                                  |
+| ![FSW: M531x539S2ff00482x482S26500517x507S33e00482x482S15a00494x512](assets/examples/thank-you.png)                                                  | Thank You      | Touch your dominant open hand to your lips, then move your hand forward, palm up.                                                                                            |
 | ![FSW: M526x532S15a37484x501S20500473x521S1f702480x495S26627504x468](assets/examples/help.png)                                                       | Help (him/her) | Place your dominant hand's fist (thumb up) on the palm of your open non-dominant hand. Move both hands upward together.                                                      |
 | ![FSW: M516x513S13f10487x498S22114484x487](assets/examples/no-hand.png)                                                                              | No             | With your dominant hand, extend your index and middle fingers while keeping your other fingers tucked in. Tap these fingers against your thumb.                              |
 | ![FSW: M518x524S30122482x476S30c00482x489](assets/examples/no-face.png)                                                                              | No             | Shake your head horizontally while forrowing your eyebrows.                                                                                                                  |
@@ -43,25 +44,25 @@ SIGNWRITING HAND-FLAT (Flat) left hand palm facing outwards, parallel to the wal
 ```
 
 This description is not natural, but it is a good start to name the symbols and their positions.
-As you can see, the 4th symbol (`Same Time`) should probably not be in the sign. But since it look similar to the
-`Head Rims` symbol, it was used.
-
-#### TODO:
-
-This requires manual coding for the properties of each class (i.e., hands have rotation, handedness, facing, and plane).
-WHICH IS NOT YET IMPLEMENTED
 
 ### GPT Description
 
 To generate a more natural description, we use ChatGPT over the naive description, and SignWriting image.
 We feed in all of the above examples for few-shot prediction.
 
-For example, if we exclude "Hello" and "Name" from the few-shots, we predict:
+For example, if we exclude each sign from the few-shots, we predict:
 
-| Translation | Description                                                                                                                                                          |
-|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Hello       | Place your dominant flat hand above your head and then move it side to side twice.                                                                                   |
-| Name        | With both hands, extend your index and middle fingers while keeping the other fingers closed in a fist. Tap the extended fingers of both hands together a few times. |
+| SignWriting                                                                                                                                          | Translation    | Description                                                                                                                                                          |
+|------------------------------------------------------------------------------------------------------------------------------------------------------|----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| ![FSW: M546x518S30007482x483S22f07525x467S15a2f516x482](assets/examples/hello.png)                                                                   | Hello          | Place your dominant flat hand above your head and move it side to side in a small motion.                                                                            |
+| ![FSW: M531x539S2ff00482x482S26500517x507S33e00482x482S15a00494x512](assets/examples/thank-you.png)                                                  | Thank You      | Nod your head slightly while smiling.                                                                                                                                |
+| ![FSW: M526x532S15a37484x501S20500473x521S1f702480x495S26627504x468](assets/examples/help.png)                                                       | Help (him/her) | With your dominant hand flat and palm facing up, move it from the lower position diagonally upward and outward.                                                      |
+| ![FSW: M516x513S13f10487x498S22114484x487](assets/examples/no-hand.png)                                                                              | No             | With your dominant hand, extend your index and middle fingers while your thumb points up. Pivot your hand up and down at the wrist.                                  |
+| ![FSW: M518x524S30122482x476S30c00482x489](assets/examples/no-face.png)                                                                              | No             | Tilt your head forward slightly with your eyebrows furrowed down in a straight line, indicating a serious or intense expression.                                     |
+| ![FSW: M511x520S1f701490x481S21100495x506](assets/examples/sorry.png)                                                                                | Sorry          | With your dominant hand in a fist, thumb pointing up, rub the thumb in a small circular motion.                                                                      |
+| ![FSW: M535x542S1060a477x458S10621494x458S20800495x472S10629468x517S10602494x517S20800489x532S2d205502x485S2d211465x484](assets/examples/friend.png) | Friend         | With both hands in front of you, form fists with your index fingers bent. Rotate your hands in alternating circular motions, as if turning two knobs simultaneously. |
+| ![FSW: M530x518S20500470x500S20305503x482S3770b488x496S37713487x496S20500520x499S20303474x483](assets/examples/love.png)                             | Love           | Cross your fists in front of your chest, then uncross them.                                                                                                          |
+| ![FSW: M522x525S11541498x491S11549479x498S20600489x476](assets/examples/name.png)                                                                    | Name           | Place your hands together at the sides of your index and middle fingers, palms facing down.                                                                          |
 
 ### Custom Model
 

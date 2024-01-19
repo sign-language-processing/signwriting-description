@@ -9,7 +9,7 @@ readme = "README.md"
 dependencies = [
     "signwriting @ git+https://github.com/sign-language-processing/signwriting",
     "Pillow",
-    "openai"
+    "openai>=1.8.0"
 ]
 
 [project.optional-dependencies]
@@ -35,6 +35,9 @@ good-names = ["i", "f", "x", "y"]
 packages = [
     "signwriting_description",
 ]
+
+[tool.setuptools.package-data]
+signwriting_description = ["**/*.json"]
 
 [tool.pytest.ini_options]
 addopts = "-v"
