@@ -28,8 +28,19 @@ Output:
 
 def image_base64(fsw: str):
     rgba_image = signwriting_to_image(fsw)
-    rgb_image = Image.new("RGB", (128, 128), (255, 255, 255))
-    rgb_image.paste(rgba_image, (0, 0), rgba_image)
+    # Add at least 5 pixels padding on all sides
+    width = rgba_image.width + 10
+    height = rgba_image.height + 10
+    # make sure image dimensions are even
+    width += width % 2
+    height += height % 2
+    # ensure dimensions are at least 68x68, minimum size for ChatGPT
+    width = max(width, 68)
+    height = max(height, 68)
+    # Create the new image
+    rgb_image = Image.new("RGB", (width, height), (255, 255, 255))
+    box = ((width - rgba_image.width) // 2, (height - rgba_image.height) // 2)
+    rgb_image.paste(rgba_image, box, rgba_image)
 
     buffered = BytesIO()
     rgb_image.save(buffered, format="JPEG")
@@ -41,8 +52,8 @@ def create_user_message(fsw: str):
     return {
         "role": "user",
         "content": [
-            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64(fsw)}"}},
             {"type": "text", "text": describe_sign_symbols(fsw)},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64(fsw)}"}},
         ],
     }
 
@@ -90,4 +101,4 @@ def describe_sign(fsw: str):
 
 if __name__ == '__main__':
     for shot in few_shots():
-        print(shot['translation'] + ' | ' + describe_sign(shot['fsw']))
+        print(f"| ![FSW: {shot['fsw']}]({shot['image']}) | {shot['translation']} | {describe_sign(shot['fsw'])} |")
