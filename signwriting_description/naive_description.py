@@ -41,7 +41,7 @@ def describe_symbol(symbol: SignSymbol):
             4: "palm facing sideways, parallel to the floor",
             5: "palm facing downwards, parallel to the floor",
         }
-        handedness = "right" if mod2 < 8 else "left"
+        handedness = "dominant" if mod2 < 8 else "non-dominant"
 
         modifier_text = f"{handedness} hand {directions[mod1]}"
     elif symbol_id in range(0x205, 0x221):  # Contact symbols
