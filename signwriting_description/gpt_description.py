@@ -34,9 +34,10 @@ def image_base64(fsw: str):
     # make sure image dimensions are even
     width += width % 2
     height += height % 2
-    # ensure dimensions are at least 68x68, minimum size for ChatGPT
-    width = max(width, 68)
-    height = max(height, 68)
+    # While 68x68 is the minimum size, GPT rescales images.
+    # For consistent images sizes, we use a 256x256 minimum, at the same cost
+    width = max(width, 256)
+    height = max(height, 256)
     # Create the new image
     rgb_image = Image.new("RGB", (width, height), (255, 255, 255))
     box = ((width - rgba_image.width) // 2, (height - rgba_image.height) // 2)
@@ -53,7 +54,7 @@ def create_user_message(fsw: str):
         "role": "user",
         "content": [
             {"type": "text", "text": describe_sign_symbols(fsw)},
-            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64(fsw)}"}},
+            {"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image_base64(fsw)}", "detail": "low"}},
         ],
     }
 
@@ -92,6 +93,7 @@ def describe_sign(fsw: str):
     response = get_openai_client().chat.completions.create(
         model="gpt-4-vision-preview",
         temperature=0,
+        seed=42,
         messages=messages,
         max_tokens=500
     )
