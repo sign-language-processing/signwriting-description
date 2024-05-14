@@ -91,7 +91,7 @@ def describe_sign(fsw: str):
 
     # Call OpenAI GPT-4 for image caption
     response = get_openai_client().chat.completions.create(
-        model="gpt-4-vision-preview",
+        model="gpt-4o",
         temperature=0,
         seed=42,
         messages=messages,
