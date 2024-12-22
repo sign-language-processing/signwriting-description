@@ -75,6 +75,7 @@ We use BLEU and chrF to compare the hand-written descriptions to the ones output
 | GPT-4 Omni (unknown).md      | 10.76 | 42.41 |
 | GPT-4 Omni 2024-05-13.md     | 12.35 | 40.81 |
 | GPT-4 Omni 2024-08-06.md     | 9.53  | 39.60 |
+| GPT-4 Omni 2024-11-20.md     | 5.25  | 39.06 |
 
 ### Custom Model
 
