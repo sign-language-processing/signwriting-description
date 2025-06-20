@@ -9,7 +9,8 @@ readme = "README.md"
 dependencies = [
     "signwriting @ git+https://github.com/sign-language-processing/signwriting",
     "Pillow",
-    "openai>=1.8.0"
+    "openai>=1.8.0",
+    "python-dotenv"
 ]
 
 [project.optional-dependencies]

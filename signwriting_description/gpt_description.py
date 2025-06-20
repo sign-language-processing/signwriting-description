@@ -4,13 +4,19 @@ from io import BytesIO
 import json
 import base64
 from pathlib import Path
+import argparse
 
+from dotenv import load_dotenv
 from openai import OpenAI
 from PIL import Image
 
 from signwriting.visualizer.visualize import signwriting_to_image
 
 from signwriting_description.naive_description import describe_sign_symbols
+
+# Load environment variables from .env file
+load_dotenv()
+
 
 SYSTEM_PROMPT = """
 This tool automatically describes SignWriting images in spoken languages.
@@ -83,7 +89,7 @@ def get_openai_client():
     return OpenAI(api_key=api_key)
 
 
-def describe_sign(fsw: str):
+def describe_sign(fsw: str, model="gpt-4o-2024-08-06"):
     messages = [{"role": "system", "content": SYSTEM_PROMPT}] + few_shot_messages(exclude=fsw)
 
     # Add the specific sign
@@ -91,16 +97,24 @@ def describe_sign(fsw: str):
 
     # Call OpenAI GPT-4 for image caption
     response = get_openai_client().chat.completions.create(
-        model="gpt-4o-2024-05-13",
-        temperature=0,
+        model=model,
+        temperature=1 if model.startswith("o") else 0,
         seed=42,
         messages=messages,
-        max_tokens=500
+        max_completion_tokens=500
     )
 
     return response.choices[0].message.content
 
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Generate descriptions for SignWriting')
+    parser.add_argument('--model', default='gpt-4o-2024-08-06', help='OpenAI model to use')
+    args = parser.parse_args()
+
+    print("| SignWriting | Translation | Description |")
+    print("|-------------|-------------|-------------|")
+
     for shot in few_shots():
-        print(f"| ![FSW: {shot['fsw']}]({shot['image']}) | {shot['translation']} | {describe_sign(shot['fsw'])} |")
+        print(f"| ![FSW: {shot['fsw']}]({shot['image']}) | "
+              f"{shot['translation']} | {describe_sign(shot['fsw'], model=args.model)} |")

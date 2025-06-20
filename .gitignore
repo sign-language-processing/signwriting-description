@@ -2,3 +2,4 @@
 build/
 signwriting_description.egg-info/
 **/__pycache__/
+.env

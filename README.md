@@ -69,13 +69,31 @@ For example, if we exclude each sign from the few-shots, we predict:
 We use BLEU and chrF to compare the hand-written descriptions to the ones outputted by ChatGPT using
 [`signwriting_description/evaluation.py`](signwriting_description/evaluation.py), resulting in:
 
-| Model                        | BLEU  | chrF2 |
-|------------------------------|-------|-------|
-| GPT-4 Vision (deprecated).md | 14.42 | 37.03 |
-| GPT-4 Omni (unknown).md      | 10.76 | 42.41 |
-| GPT-4 Omni 2024-05-13.md     | 12.35 | 40.81 |
-| GPT-4 Omni 2024-08-06.md     | 9.53  | 39.60 |
-| GPT-4 Omni 2024-11-20.md     | 5.25  | 39.06 |
+| Model                 | BLEU  | chrF2 |
+|-----------------------|-------|-------|
+| gpt-4o-2024-11-20.md  | 5.31  | 39.99 |
+| gpt-4o-2024-05-13.md  | 10.26 | 42.49 |
+| gpt-4.1-2025-04-14.md | 8.27  | 40.74 |
+| gpt-4o-2024-08-06.md  | 13.18 | 40.34 |
+| o3-2025-04-16.md      | 0.09  | 6.92  |
+
+To recreate the evaluation files, run:
+
+```shell
+MODELS=(
+    "gpt-4o-2024-05-13"
+    "gpt-4o-2024-08-06"
+    "gpt-4o-2024-11-20"
+    "gpt-4.1-2025-04-14"
+    "o3-2025-04-16"
+)
+for model in "${MODELS[@]}"; do
+    output_file="signwriting_description/results/$model.md"
+    if [ ! -f "$output_file" ]; then
+        python -u -m signwriting_description.gpt_description --model="$model" | tee "$output_file"
+    fi
+done
+```
 
 ### Custom Model
 
