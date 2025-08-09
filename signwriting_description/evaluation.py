@@ -17,7 +17,20 @@ def main():
     print('|------------------------------|------|-------|')
 
     results_dir = Path(__file__).parent / "results"
-    for result_file in results_dir.glob("*.md"):
+    result_files = list(results_dir.glob("*.md"))
+
+    # Sort by extracting date from filename (format: model-YYYY-MM-DD.md)
+    def get_sort_key(file_path):
+        name = file_path.name
+        # Extract date part (last 10 characters before .md)
+        date_part = name[-13:-3]  # Gets YYYY-MM-DD
+        # Extract model name part
+        model_part = name[:-14]  # Everything before the date
+        return (date_part, model_part)
+
+    result_files.sort(key=get_sort_key)
+
+    for result_file in result_files:
         hypothesis = get_table_rows(result_file)
         scores = []
         for metric in [BLEU(), CHRF()]:

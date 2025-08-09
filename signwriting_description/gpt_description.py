@@ -17,7 +17,6 @@ from signwriting_description.naive_description import describe_sign_symbols
 # Load environment variables from .env file
 load_dotenv()
 
-
 SYSTEM_PROMPT = """
 This tool automatically describes SignWriting images in spoken languages.
 The description is sign language agnostic, making it useful for teaching SignWriting to learners.
@@ -90,7 +89,7 @@ def get_openai_client():
 
 
 def describe_sign(fsw: str, model="gpt-4o-2024-08-06"):
-    messages = [{"role": "system", "content": SYSTEM_PROMPT}] + few_shot_messages(exclude=fsw)
+    messages = [{"role": "developer", "content": SYSTEM_PROMPT}] + few_shot_messages(exclude=fsw)
 
     # Add the specific sign
     messages.append(create_user_message(fsw))
@@ -98,13 +97,12 @@ def describe_sign(fsw: str, model="gpt-4o-2024-08-06"):
     # Call OpenAI GPT-4 for image caption
     response = get_openai_client().chat.completions.create(
         model=model,
-        temperature=1 if model.startswith("o") else 0,
+        temperature=0 if model.startswith("gpt-4") else 1,
         seed=42,
-        messages=messages,
-        max_completion_tokens=500
+        messages=messages
     )
 
-    return response.choices[0].message.content
+    return response.choices[0].message.content.replace('\n', ' ').strip()
 
 
 if __name__ == '__main__':

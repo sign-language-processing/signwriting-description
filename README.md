@@ -69,13 +69,16 @@ For example, if we exclude each sign from the few-shots, we predict:
 We use BLEU and chrF to compare the hand-written descriptions to the ones outputted by ChatGPT using
 [`signwriting_description/evaluation.py`](signwriting_description/evaluation.py), resulting in:
 
-| Model                 | BLEU  | chrF2 |
-|-----------------------|-------|-------|
-| gpt-4o-2024-11-20.md  | 5.31  | 39.99 |
-| gpt-4o-2024-05-13.md  | 10.26 | 42.49 |
-| gpt-4.1-2025-04-14.md | 8.27  | 40.74 |
-| gpt-4o-2024-08-06.md  | 13.18 | 40.34 |
-| o3-2025-04-16.md      | 0.09  | 6.92  |
+| Model                    | BLEU  | chrF2 |
+|--------------------------|-------|-------|
+| gpt-4o-2024-05-13.md     | 10.26 | 42.49 |
+| gpt-4o-2024-08-06.md     | 13.18 | 40.34 |
+| gpt-4o-2024-11-20.md     | 5.31  | 39.99 |
+| gpt-4.1-2025-04-14.md    | 8.27  | 40.74 |
+| o3-2025-04-16.md         | 0.09  | 6.92  |
+| gpt-5-2025-08-07.md      | 2.85  | 33.31 |
+| gpt-5-mini-2025-08-07.md | 2.91  | 34.80 |
+| gpt-5-nano-2025-08-07.md | 2.41  | 30.93 |
 
 To recreate the evaluation files, run:
 
@@ -86,6 +89,9 @@ MODELS=(
     "gpt-4o-2024-11-20"
     "gpt-4.1-2025-04-14"
     "o3-2025-04-16"
+    "gpt-5-nano-2025-08-07"
+    "gpt-5-mini-2025-08-07"
+    "gpt-5-2025-08-07"
 )
 for model in "${MODELS[@]}"; do
     output_file="signwriting_description/results/$model.md"
