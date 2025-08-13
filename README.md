@@ -72,13 +72,13 @@ We use BLEU and chrF to compare the hand-written descriptions to the ones output
 | Model                    | BLEU  | chrF2 |
 |--------------------------|-------|-------|
 | gpt-4o-2024-05-13.md     | 10.26 | 42.49 |
-| gpt-4o-2024-08-06.md     | 13.18 | 40.34 |
+| gpt-4o-2024-08-06.md     | 11.30 | 40.46 |
 | gpt-4o-2024-11-20.md     | 5.31  | 39.99 |
 | gpt-4.1-2025-04-14.md    | 8.27  | 40.74 |
 | o3-2025-04-16.md         | 0.09  | 6.92  |
-| gpt-5-2025-08-07.md      | 2.85  | 33.31 |
-| gpt-5-mini-2025-08-07.md | 2.91  | 34.80 |
-| gpt-5-nano-2025-08-07.md | 2.41  | 30.93 |
+| gpt-5-2025-08-07.md      | 3.43  | 35.24 |
+| gpt-5-mini-2025-08-07.md | 4.67  | 36.64 |
+| gpt-5-nano-2025-08-07.md | 2.48  | 31.23 |
 
 To recreate the evaluation files, run:
 
