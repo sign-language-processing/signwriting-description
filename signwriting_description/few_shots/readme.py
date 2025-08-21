@@ -7,7 +7,7 @@ if __name__ == "__main__":
     # Load JSON data from the file
     current_dir = Path(__file__).parent
     json_file = current_dir / "data.json"
-    with open(json_file, 'r', encoding="utf-8") as file:
+    with open(json_file, encoding="utf-8") as file:
         data = json.load(file)
 
     # Start the markdown table

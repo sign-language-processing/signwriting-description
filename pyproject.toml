@@ -10,28 +10,39 @@ dependencies = [
     "signwriting @ git+https://github.com/sign-language-processing/signwriting",
     "Pillow",
     "openai>=1.8.0",
-    "python-dotenv"
+    "python-dotenv",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest",
-    "pylint",
-    "sacrebleu"
+    "ruff",
+    "sacrebleu",
 ]
 
-[tool.yapf]
-based_on_style = "google"
-column_limit = 120
-
-[tool.pylint]
-max-line-length = 120
-disable = [
-    "C0114", # Missing module docstring
-    "C0115", # Missing class docstring
-    "C0116", # Missing function or method docstring
+server = [
+    "fastapi",
+    "diskcache",
+    "uvicorn[standard]",
 ]
-good-names = ["i", "f", "x", "y"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+    "C90", # mccabe complexity
+    "I", # isort
+    "N", # pep8-naming
+    "UP", # pyupgrade
+    "B", # flake8-bugbear
+    "PT", # flake8-pytest-style
+    "W605", # invalid escape sequence
+    "BLE", # flake8-blind-except
+]
 
 [tool.setuptools]
 packages = [

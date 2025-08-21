@@ -1,6 +1,5 @@
 import json
 from functools import lru_cache
-
 from pathlib import Path
 
 from signwriting.formats.fsw_to_sign import fsw_to_sign
@@ -10,12 +9,11 @@ from signwriting.types import SignSymbol
 @lru_cache(maxsize=1)
 def get_symbol_names():
     current_directory = Path(__file__).parent
-    with open(current_directory / "symbols.json", "r", encoding="utf-8") as f:
+    with open(current_directory / "symbols.json", encoding="utf-8") as f:
         return json.load(f)
 
 
-# pylint: disable=too-many-branches,too-many-locals
-def describe_symbol(symbol: SignSymbol):
+def describe_symbol(symbol: SignSymbol): # noqa: C901
     symbol_names = get_symbol_names()
 
     # Parse symbol parts

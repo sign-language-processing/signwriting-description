@@ -105,3 +105,18 @@ done
 
 Ideally, we would like to use a model that is trained on SignWriting descriptions.
 We can generate a dataset using ChatGPT, and then fine-tune a model on this dataset.
+
+## Dockerized Web Server
+
+```shell
+docker build --tag signwriting-description .
+
+docker run --rm -p 9873:8080 \
+  -e PORT=8080 \
+  -e OPENAI_API_KEY=your_openai_key \
+  -e DISK_CACHE_DIR=/mnt/cache \
+  -v $(pwd)/cache:/mnt/cache \
+  signwriting-description
+
+curl http://localhost:9873/?fsw=M546x518S30007482x483S22f07525x467S15a2f516x482
+```

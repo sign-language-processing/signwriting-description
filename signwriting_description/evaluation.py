@@ -1,6 +1,8 @@
 import re
 from pathlib import Path
+
 from sacrebleu.metrics import BLEU, CHRF
+
 
 def get_table_rows(file_path: Path):
     table_rows = re.findall(r"\|.*\|", file_path.read_text())

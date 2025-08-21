@@ -1,15 +1,14 @@
-import os
-from functools import lru_cache
-from io import BytesIO
-import json
-import base64
-from pathlib import Path
 import argparse
+import base64
+import json
+import os
+from functools import cache, lru_cache
+from io import BytesIO
+from pathlib import Path
 
 from dotenv import load_dotenv
 from openai import OpenAI
 from PIL import Image
-
 from signwriting.visualizer.visualize import signwriting_to_image
 
 from signwriting_description.naive_description import describe_sign_symbols
@@ -18,14 +17,18 @@ from signwriting_description.naive_description import describe_sign_symbols
 load_dotenv()
 
 SYSTEM_PROMPT = """
-You are a helpful assistant whose role is to provide concise, human-readable descriptions of SignWriting images in English. 
-You are a SignWriting expert, and you will be asked to interpret a SignWriting image and generate a clear English description.
+You are a helpful assistant whose role is to provide concise,
+human-readable descriptions of SignWriting images in English.
+You are a SignWriting expert, and you will be asked to interpret a
+SignWriting image and generate a clear English description.
 
 Each prompt includes:
 - The SignWriting image itself.
-- The naive technical description of the sign (e.g., symbol names, positions, movements, and rotations as output by a parser)
+- The naive technical description of the sign
+    (e.g., symbol names, positions, movements, and rotations as output by a parser)
 
-Write a concise, paragraph-style description of the sign in sentence form, focusing on hand movements, facial expressions, and body language. 
+Write a concise, paragraph-style description of the sign in sentence form,
+focusing on hand movements, facial expressions, and body language.
 Your response should be a continuous description in sentence form, not a list or bullet points.
 """.strip()
 
@@ -52,7 +55,7 @@ def image_base64(fsw: str):
     return base64.b64encode(buffered.getvalue()).decode('utf-8')
 
 
-@lru_cache(maxsize=None)
+@cache
 def create_user_message(fsw: str):
     return {
         "role": "user",
@@ -66,7 +69,7 @@ def create_user_message(fsw: str):
 @lru_cache(maxsize=1)
 def few_shots():
     data_path = Path(__file__).parent / "few_shots/data.json"
-    with open(data_path, 'r', encoding="utf-8") as file:
+    with open(data_path, encoding="utf-8") as file:
         return json.load(file)
 
 
