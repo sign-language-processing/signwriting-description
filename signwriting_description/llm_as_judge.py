@@ -106,7 +106,7 @@ def main():
     for result_file in result_files:
         candidates = get_table_rows(result_file)
         scores = []
-        for ref, cand in zip(references, candidates):
+        for ref, cand in zip(references, candidates, strict=True):
             result = judge_description(ref, cand, model=args.model)
             scores.append(result.score)
 

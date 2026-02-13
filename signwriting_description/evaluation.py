@@ -45,7 +45,7 @@ def main():
         from signwriting_description.llm_as_judge import judge_description
 
         judge_scores = []
-        for ref, cand in zip(references, hypothesis):
+        for ref, cand in zip(references, hypothesis, strict=True):
             result = judge_description(ref, cand, model=args.judge_model)
             judge_scores.append(result.score)
         avg_judge = sum(judge_scores) / len(judge_scores)
