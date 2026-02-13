@@ -3,54 +3,54 @@
     "fsw": "M546x518S30007482x483S22f07525x467S15a2f516x482",
     "image": "assets/examples/hello.png",
     "translation": "Hello",
-    "description": "With your dominant hand open, touch your forehead and move your hand away, palm facing out."
+    "description": "With your dominant open hand, fingers together and pointing up, place your fingertips near the right side of your forehead, palm angled away from your body. Move your hand forward (away from your body) in a straight path."
   },
   {
     "fsw": "M531x539S2ff00482x482S26500517x507S33e00482x482S15a00494x512",
     "image": "assets/examples/thank-you.png",
     "translation": "Thank You",
-    "description": "Touch your dominant open hand to your lips, then move your hand forward, palm up."
+    "description": "With your dominant open hand, fingers together and pointing up, touch your fingertips to your lips, palm toward your body. Move your hand forward and slightly downward, palm toward the ceiling."
   },
   {
-    "fsw": "M526x532S15a37484x501S20500473x521S1f702480x495S26627504x468",
+    "fsw": "M517x527S15a37494x496S20500483x516S1f702490x490S22a00493x473",
     "image": "assets/examples/help.png",
     "translation": "Help (him/her)",
-    "description": "Place your dominant hand's fist (thumb up) on the palm of your open non-dominant hand. Move both hands upward together."
+    "description": "Hold your non-dominant open hand flat in front of your torso, palm toward the ceiling. Place your dominant fist with thumb pointing up on that palm. Move both hands upward together."
   },
   {
     "fsw": "M516x513S13f10487x498S22114484x487",
     "image": "assets/examples/no-hand.png",
     "translation": "No",
-    "description": "With your dominant hand, extend your index and middle fingers while keeping your other fingers tucked in. Tap these fingers against your thumb."
+    "description": "With your dominant hand, extend your index and middle fingers and extend your thumb, other fingers closed, palm toward your sideways. Bring the index and middle fingertips to touch the thumb twice with quick closing movements."
   },
   {
     "fsw": "M518x524S30122482x476S30c00482x489",
     "image": "assets/examples/no-face.png",
     "translation": "No",
-    "description": "Shake your head horizontally while forrowing your eyebrows."
+    "description": "Shake your head left and right while furrowing your eyebrows."
   },
   {
     "fsw": "M511x520S1f701490x481S21100495x506",
     "image": "assets/examples/sorry.png",
     "translation": "Sorry",
-    "description": "Form a fist with your dominant hand, palm facing in. Circle it over your heart."
+    "description": "Form a fist with your dominant hand, palm toward your body. Rub the fist on your chest in a small clockwise circle repeatedly."
   },
   {
     "fsw": "M535x542S1060a477x458S10621494x458S20800495x472S10629468x517S10602494x517S20800489x532S2d205502x485S2d211465x484",
     "image": "assets/examples/friend.png",
     "translation": "Friend",
-    "description": "Link the index fingers of both hands together, alternating their positions."
+    "description": "With both hands, extend your index fingers, other fingers closed. Hook the two index fingers together in front of your chest. Alternate which index finger is on top with small switching movements."
   },
   {
     "fsw": "M530x518S20500470x500S20305503x482S3770b488x496S37713487x496S20500520x499S20303474x483",
     "image": "assets/examples/love.png",
     "translation": "Love",
-    "description": "Cross your arms over your chest as if giving yourself a hug, with your hands forming fists."
+    "description": "Form fists with both hands, palms toward your body. Cross your forearms over your chest so each fist rests near the opposite shoulder."
   },
   {
     "fsw": "M522x525S11541498x491S11549479x498S20600489x476",
     "image": "assets/examples/name.png",
     "translation": "Name",
-    "description": "With your dominant hand, extend your index and middle fingers. Tap these fingers twice onto the extended index finger of your non-dominant hand, which is held horizontally."
+    "description": "With both hands, extend your index and middle fingers, other fingers closed, palms sideways. Place the middle-finger side of your dominant hand against the index-finger side of your non-dominant hand. Tap this side contact twice with small movements."
   }
 ]

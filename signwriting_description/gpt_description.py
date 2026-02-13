@@ -16,21 +16,23 @@ from signwriting_description.naive_description import describe_sign_symbols
 # Load environment variables from .env file
 load_dotenv()
 
-SYSTEM_PROMPT = """
-You are a helpful assistant whose role is to provide concise,
-human-readable descriptions of SignWriting images in English.
-You are a SignWriting expert, and you will be asked to interpret a
-SignWriting image and generate a clear English description.
+SYSTEM_PROMPT_INTRO = (
+    "You are a SignWriting expert. "
+    "Given a SignWriting image and its naive technical description "
+    "(symbol names, positions, movements, rotations), "
+    "write a concise, paragraph-style English description of the sign. "
+    "Your response must be continuous prose, not a list or bullet points."
+)
 
-Each prompt includes:
-- The SignWriting image itself.
-- The naive technical description of the sign
-    (e.g., symbol names, positions, movements, and rotations as output by a parser)
 
-Write a concise, paragraph-style description of the sign in sentence form,
-focusing on hand movements, facial expressions, and body language.
-Your response should be a continuous description in sentence form, not a list or bullet points.
-""".strip()
+def _load_conventions() -> str:
+    conventions_path = Path(__file__).parent / "CONVENTIONS.md"
+    return conventions_path.read_text(encoding="utf-8")
+
+
+@cache
+def system_prompt() -> str:
+    return f"{SYSTEM_PROMPT_INTRO}\n\n{_load_conventions()}"
 
 
 def image_base64(fsw: str):
@@ -91,7 +93,7 @@ def get_openai_client():
 
 
 def describe_sign(fsw: str, model="gpt-4o-2024-08-06"):
-    messages = [{"role": "developer", "content": SYSTEM_PROMPT}] + few_shot_messages(exclude=fsw)
+    messages = [{"role": "developer", "content": system_prompt()}] + few_shot_messages(exclude=fsw)
 
     # Add the specific sign
     messages.append(create_user_message(fsw))

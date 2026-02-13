@@ -50,7 +50,10 @@ packages = [
 ]
 
 [tool.setuptools.package-data]
-signwriting_description = ["**/*.json"]
+signwriting_description = [
+    "**/*.json",
+    "**/*.md",
+]
 
 [tool.pytest.ini_options]
 addopts = "-v"
