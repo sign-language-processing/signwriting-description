@@ -1,4 +1,5 @@
 import os
+from datetime import UTC, datetime
 
 import uvicorn
 from dotenv import load_dotenv
@@ -19,7 +20,11 @@ app = FastAPI(title="Signwriting Description API")
 
 @app.get("/health")
 def health():
-    return {"status": "ok"}
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now(tz=UTC).isoformat(),
+        "service": "signwriting-description",
+    }
 
 
 @app.get("/")
