@@ -1,8 +1,5 @@
-from __future__ import annotations
-
-import hashlib
 import os
-from pathlib import Path
+from datetime import UTC, datetime
 
 import uvicorn
 from dotenv import load_dotenv
@@ -18,17 +15,16 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise RuntimeError("Missing OPENAI_API_KEY environment variable")
 
-DISKCACHE_DIR = os.getenv("DISK_CACHE_DIR")
-cache: Cache | None = None
-if DISKCACHE_DIR:
-    from diskcache import Cache
-
-    path = Path(DISKCACHE_DIR).expanduser()
-    print("Using disk cache at", path)
-    path.mkdir(parents=True, exist_ok=True)
-    cache = Cache(str(path))
-
 app = FastAPI(title="Signwriting Description API")
+
+
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy",
+        "timestamp": datetime.now(tz=UTC).isoformat(),
+        "service": "signwriting-description",
+    }
 
 
 @app.get("/")
@@ -38,7 +34,6 @@ def signwriting_description(
     if not fsw:
         raise HTTPException(status_code=400, detail="Missing `fsw` parameter")
 
-    # Validate FSW parses and isn't empty
     try:
         sign = fsw_to_sign(fsw)
     except Exception as e:
@@ -47,31 +42,9 @@ def signwriting_description(
     if not sign or len(sign.get("symbols", [])) == 0:
         raise HTTPException(status_code=400, detail="Empty `fsw` property")
 
-    fsw_hash = hashlib.md5(fsw.encode("utf-8")).hexdigest()
-    key = f"descriptions:{fsw_hash}"
-    print("Cache key:", key)
+    description = describe_sign(fsw)
 
-    description = None
-    cache_hit = False
-
-    if cache is not None:
-        cached: str | None = cache.get(key)
-        if cached is not None:
-            print("Cache hit")
-            description, cache_hit = cached, True
-
-    if description is None:
-        print("Input:", fsw)
-        description = describe_sign(fsw)
-        print("Output:", description)
-
-        if cache is not None:
-            cache.set(key, description)
-
-    resp = JSONResponse(content={
-        "description": description,
-        "cache_hit": cache_hit
-    })
+    resp = JSONResponse(content={"description": description})
     resp.headers["Cache-Control"] = "public, max-age=2592000"  # 30 days
     return resp
 

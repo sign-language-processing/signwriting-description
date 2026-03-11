@@ -22,7 +22,6 @@ dev = [
 
 server = [
     "fastapi",
-    "diskcache",
     "uvicorn[standard]",
 ]
 
