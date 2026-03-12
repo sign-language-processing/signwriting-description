@@ -11,6 +11,7 @@ dependencies = [
     "Pillow",
     "openai>=1.8.0",
     "python-dotenv",
+    "regex",
 ]
 
 [project.optional-dependencies]
