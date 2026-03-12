@@ -34,3 +34,10 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t signwriting-description .
+
+      - name: Smoke test /health endpoint
+        run: |
+          docker run -d --name smoke -e PORT=8080 -e OPENAI_API_KEY=test -p 8080:8080 signwriting-description
+          for i in 1 2 3 4 5; do curl -sf http://localhost:8080/health && exit 0; sleep 2; done
+          docker logs smoke
+          exit 1
