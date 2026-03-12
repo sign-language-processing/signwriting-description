@@ -24,3 +24,13 @@ jobs:
 
       - name: Test Code
         run: pytest signwriting_description
+
+  docker-build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t signwriting-description .
