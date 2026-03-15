@@ -17,8 +17,6 @@ if not OPENAI_API_KEY:
     raise RuntimeError("Missing OPENAI_API_KEY environment variable")
 
 TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY")
-if not TURNSTILE_SECRET_KEY:
-    raise RuntimeError("Missing TURNSTILE_SECRET_KEY environment variable")
 
 app = FastAPI(title="Signwriting Description API")
 
@@ -27,7 +25,7 @@ TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverif
 
 @app.middleware("http")
 async def turnstile_verification(request: Request, call_next):
-    if request.url.path == "/health":
+    if request.url.path == "/health" or not TURNSTILE_SECRET_KEY:
         return await call_next(request)
 
     token = request.headers.get("cf-turnstile-response")
