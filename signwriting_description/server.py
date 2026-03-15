@@ -22,7 +22,6 @@ if not TURNSTILE_SECRET_KEY:
 
 app = FastAPI(title="Signwriting Description API")
 
-TURNSTILE_VERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify"
 
 
 @app.middleware("http")
@@ -35,10 +34,10 @@ async def turnstile_verification(request: Request, call_next):
         return JSONResponse(status_code=403, content={"error": "Missing Turnstile token"})
 
     async with httpx.AsyncClient() as client:
-        result = await client.post(TURNSTILE_VERIFY_URL, data={
-            "secret": TURNSTILE_SECRET_KEY,
-            "response": token,
-        })
+        result = await client.post(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            data={"secret": TURNSTILE_SECRET_KEY, "response": token},
+        )
 
     if not result.json().get("success"):
         return JSONResponse(status_code=403, content={"error": "Invalid Turnstile token"})
