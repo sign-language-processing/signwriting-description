@@ -17,6 +17,8 @@ if not OPENAI_API_KEY:
     raise RuntimeError("Missing OPENAI_API_KEY environment variable")
 
 TURNSTILE_SECRET_KEY = os.getenv("TURNSTILE_SECRET_KEY")
+if not TURNSTILE_SECRET_KEY:
+    raise RuntimeError("Missing TURNSTILE_SECRET_KEY environment variable")
 
 app = FastAPI(title="Signwriting Description API")
 
