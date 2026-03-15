@@ -37,6 +37,6 @@ jobs:
 
       - name: Smoke test /health endpoint
         run: |
-          docker run -d --name smoke -e PORT=8080 -e OPENAI_API_KEY=test -e TURNSTILE_SECRET_KEY=test -p 8080:8080 signwriting-description
+          docker run -d --name smoke -e PORT=8080 -e OPENAI_API_KEY=test -e TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA -p 8080:8080 signwriting-description
           sleep 5 # wait for uvicorn cold start
           curl -sf http://localhost:8080/health
