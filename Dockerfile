@@ -1,4 +1,4 @@
-FROM python:3.15.2-slim-trixie@sha256:65a65fc7b30b06cb6df4930fd4650697cb23f4c2698ab81fc87e4b031bc36928
+FROM python:3.15.2-slim-trixie
 
 # Allow statements and log messages to immediately appear in the Knative logs
 ENV PYTHONUNBUFFERED True
@@ -11,12 +11,11 @@ RUN apt-get install -y git
 
 # Setup local workdir and dependencies
 WORKDIR /app
-COPY requirements.lock /opt/requirements.lock
 
 # Install other python dependencies.
 ADD ./pyproject.toml ./pyproject.toml
 RUN mkdir -p signwriting_description && touch README.md
-RUN pip install --no-cache-dir -r /opt/requirements.lock && pip install --no-deps ".[server]"
+RUN pip install --no-cache-dir ".[server]"
 
 # Copy local code to the container image.
 COPY ./signwriting_description ./signwriting_description
