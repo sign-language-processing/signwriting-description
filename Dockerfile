@@ -1,33 +1,19 @@
-FROM python:3.15.2-slim-trixie
-
-# Allow statements and log messages to immediately appear in the Knative logs
-ENV PYTHONUNBUFFERED True
-
-## Install system dependencies
-RUN apt-get update && apt-get upgrade -y
-
-# git: for git based python dependencies
-RUN apt-get install -y git
-
-# Setup local workdir and dependencies
+FROM python:3.15.2-slim-trixie AS builder
+RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
+COPY pyproject.toml README.md ./
+COPY signwriting_description/ ./signwriting_description/
+RUN python -m venv --without-pip /opt/venv \
+    && python -m pip --python /opt/venv/bin/python install --no-cache-dir ".[server]"
 
-# Install other python dependencies.
-ADD ./pyproject.toml ./pyproject.toml
-RUN mkdir -p signwriting_description && touch README.md
-RUN pip install --no-cache-dir ".[server]"
-
-# Copy local code to the container image.
-COPY ./signwriting_description ./signwriting_description
-
+FROM python:3.15.2-slim-trixie AS runtime
+RUN apt-get update && apt-get upgrade -y \
+    && rm -rf /var/lib/apt/lists/* /usr/local/lib/python3.15/ensurepip /usr/local/lib/python3.15/site-packages /usr/local/bin/pip*
 RUN useradd --create-home --uid 1000 app
-RUN rm -rf /usr/local/lib/python*/ensurepip /usr/local/lib/python*/site-packages/pip /usr/local/lib/python*/site-packages/pip-*.dist-info /opt/venv/lib/python*/site-packages/pip /opt/venv/lib/python*/site-packages/pip-*.dist-info
-
+WORKDIR /app
+ENV PATH="/opt/venv/bin:$PATH" PYTHONUNBUFFERED=1 PORT=8080
+COPY --from=builder /opt/venv /opt/venv
+COPY signwriting_description/ ./signwriting_description/
 USER app
-ENV PORT=8080
-
-# Run the web service on container startup. Here we use the uvicorn
-# ASGI server, with one worker process.
-# For environments with multiple CPU cores, increase the number of workers
-# to be equal to the cores available.
+EXPOSE 8080
 CMD exec uvicorn signwriting_description.server:app --host 0.0.0.0 --port $PORT --workers 1
