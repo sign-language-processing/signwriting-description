@@ -29,7 +29,7 @@ def health():
 
 @app.get("/")
 def signwriting_description(
-    fsw: str = Query(description="FSW string representing a sign"),
+    fsw: str = Query(description="FSW string representing a sign", max_length=8192),
 ):
     if not fsw:
         raise HTTPException(status_code=400, detail="Missing `fsw` parameter")
@@ -42,6 +42,9 @@ def signwriting_description(
     if not sign or len(sign.get("symbols", [])) == 0:
         raise HTTPException(status_code=400, detail="Empty `fsw` property")
 
+    if len(sign["symbols"]) > 256:
+        raise HTTPException(status_code=413, detail="Too many symbols")
+
     description = describe_sign(fsw)
 
     resp = JSONResponse(content={"description": description})
@@ -50,4 +53,4 @@ def signwriting_description(
 
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), reload=False)

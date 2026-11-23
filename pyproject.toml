@@ -8,7 +8,7 @@ authors = [
 readme = "README.md"
 dependencies = [
     "signwriting @ git+https://github.com/sign-language-processing/signwriting",
-    "Pillow",
+    "Pillow>=13.0.0",
     "openai>=1.8.0",
     "python-dotenv",
     "regex",
@@ -22,8 +22,8 @@ dev = [
 ]
 
 server = [
-    "fastapi",
-    "uvicorn[standard]",
+    "fastapi>=0.165.0",
+    "uvicorn[standard]>=0.54.0",
 ]
 
 [tool.ruff]
