@@ -1,5 +1,5 @@
 import argparse
-from enum import Enum
+from enum import StrEnum
 from functools import cache
 from pathlib import Path
 
@@ -9,7 +9,7 @@ from signwriting_description.evaluation import get_table_rows
 from signwriting_description.gpt_description import _load_conventions, get_openai_client
 
 
-class ErrorCategory(str, Enum):
+class ErrorCategory(StrEnum):
     HANDSHAPE = "Handshape"
     PALM_ORIENTATION = "Palm Orientation"
     FINGER_DIRECTION = "Finger Direction"
@@ -25,7 +25,7 @@ class ErrorCategory(str, Enum):
     VIEWPOINT = "Viewpoint"
 
 
-class Severity(str, Enum):
+class Severity(StrEnum):
     CRITICAL = "Critical"
     MAJOR = "Major"
     MINOR = "Minor"
