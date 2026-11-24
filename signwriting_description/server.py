@@ -11,6 +11,9 @@ from signwriting_description.gpt_description import describe_sign
 
 load_dotenv()
 
+MAX_FSW_CHARS = 8192
+MAX_SIGN_SYMBOLS = 256
+
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise RuntimeError("Missing OPENAI_API_KEY environment variable")
@@ -29,7 +32,7 @@ def health():
 
 @app.get("/")
 def signwriting_description(
-    fsw: str = Query(description="FSW string representing a sign"),
+    fsw: str = Query(description="FSW string representing a sign", max_length=MAX_FSW_CHARS),
 ):
     if not fsw:
         raise HTTPException(status_code=400, detail="Missing `fsw` parameter")
@@ -42,6 +45,9 @@ def signwriting_description(
     if not sign or len(sign.get("symbols", [])) == 0:
         raise HTTPException(status_code=400, detail="Empty `fsw` property")
 
+    if len(sign["symbols"]) > MAX_SIGN_SYMBOLS:
+        raise HTTPException(status_code=413, detail="Too many symbols")
+
     description = describe_sign(fsw)
 
     resp = JSONResponse(content={"description": description})
@@ -50,4 +56,4 @@ def signwriting_description(
 
 
 if __name__ == "__main__":
-    uvicorn.run("server:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), reload=True)
+    uvicorn.run("server:app", host="0.0.0.0", port=int(os.environ.get("PORT", 8080)), reload=False)

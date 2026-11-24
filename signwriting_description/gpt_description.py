@@ -2,7 +2,7 @@ import argparse
 import base64
 import json
 import os
-from functools import cache, lru_cache
+from functools import lru_cache
 from io import BytesIO
 from pathlib import Path
 
@@ -30,7 +30,7 @@ def _load_conventions() -> str:
     return conventions_path.read_text(encoding="utf-8")
 
 
-@cache
+@lru_cache(maxsize=128)
 def system_prompt() -> str:
     return f"{SYSTEM_PROMPT_INTRO}\n\n{_load_conventions()}"
 
@@ -57,7 +57,7 @@ def image_base64(fsw: str):
     return base64.b64encode(buffered.getvalue()).decode('utf-8')
 
 
-@cache
+@lru_cache(maxsize=128)
 def create_user_message(fsw: str):
     return {
         "role": "user",
